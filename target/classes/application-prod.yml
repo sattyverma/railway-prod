@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://roundhouse.proxy.rlwy.net:17853/railway
+    username: root
+    password: zcxgFNlnKXvyPEIZcZkXnogYuQYINemq
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeLeaf.com">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Book Store</title>
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <style>
+		body {
+    background-image:url('https://th.bing.com/th/id/OIP.0kTD-unuaAOdmQA-JMMxbgHaEK?rs=1&pid=ImgDetMain');
+     background-size: cover;
+            background-repeat: no-repeat;
+    color: #fff;
+}
+
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #333;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #222;
+}
+
+.table tbody tr:hover {
+    background-color: #BFCFE7;
+}
+
+.buttonMybook {
+    background-color: #26577C;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.buttonMybook1 {
+    background-color:#A9333A;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.buttonMybook1:hover {
+    background-color: rgb(255, 255, 255);
+}
+.buttonMybook:hover {
+    background-color: rgb(255, 255, 255);
+}
+/* Navbar button styling */
+.admin-btn {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.admin-btn:hover {
+  background-color: white;
+  color: black;
+}
+.star-icon {
+    color: gold; /* Set the color of the star icons */
+    position: relative; /* Set position relative to allow absolute positioning */
+}
+
+.star-icon:before {
+    content: '\2605'; /* Unicode for star icon */
+    position: absolute; /* Position absolutely within the cell */
+    left: 0; /* Adjust the left position */
+}
+
+.rating-value {
+    visibility: hidden; /* Hide the actual rating value */
+}
+
+
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+     <nav  class="navbar navbar-expand-lg" style="background-color: #000000;position: sticky; top:0px;z-index: 2;">
+  <div class="container-fluid">
+   <a class="navbar-brand text-white" href="loginn">
+  <button class="admin-btn">Admin</button>
+</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="available_books">Available Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="my_books">My Books</a>
+        </li>
+      </ul>
+      <div>
+      <a class="nav-link text-white" href="loginnn">New Book Register</a>
+      </div>
+      
+    </div>
+  </div>
+</nav>
+<div class="container">
+<table class="table table-stripped table-hover">
+  <thead>
+    <tr>
+      
+      <th scope="col">NAME</th>
+      <th scope="col">AUTHOR</th>
+      <th scope="col">RATING</th>
+      <th scope="col">ACTION</th>
+       <th scope="col">LINK</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="b:${book}">
+      <td th:text="${b.name}"></td>
+      <td th:text="${b.author}"></td>
+       <td>
+            <span th:each="i : ${#numbers.sequence(1, b.rating)}" class="star-icon">&#9733;</span>
+            <span class="rating-value" th:text="${b.rating}"></span>
+        </td>
+     
+      <td><a class="buttonMybook1" th:href="@{/deleteMyList/{id}(id=${b.id})}">Delete</a></td>
+      <td>
+    <a class="buttonMybook" th:href="${b.link}" target="_blank">Download</a>
+</td>
+
+    </tr> 
+  </tbody>
+</table>
+</div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+  </body>
+</html>

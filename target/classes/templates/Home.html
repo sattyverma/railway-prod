@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeLeaf.com">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Book Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+}
+
+
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    gap: 45px;
+    flex-wrap: wrap;
+}
+
+.card {
+    position: relative;
+    width: 325px;
+    height: 450px;
+    background: #000;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
+.poster {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.poster::before {
+    content: '';
+    position: absolute;
+    bottom: -45%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: .3s;
+}
+
+.card:hover .poster::before {
+    bottom: 0;
+}
+
+.poster img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s;
+}
+
+.card:hover .poster img {
+    transform: scale(1.1);
+}
+
+.details {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 1.5em 1.5em 2em;
+    background: #000000;
+    backdrop-filter: blur(16px) saturate(120%);
+    transition: .3s;
+    color: #fff;
+    z-index: 2;
+}
+
+.card:hover .details {
+    bottom: 0;
+}
+
+.details h1,
+.details h2 {
+    font-weight: 700;
+}
+
+.details h1 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.details h2 {
+    font-weight: 400;
+    font-size: 1em;
+    margin-bottom: 10px;
+    opacity: .6;
+}
+
+.details .rating {
+    position: relative;
+    margin-bottom: 15px;
+    display: flex;
+    gap: .25em;
+}
+
+.details .rating i {
+    color: #e3c414;
+}
+
+.details .rating span {
+    margin-left: 0.25em;
+}
+
+.details .tags {
+    display: flex;
+    gap: .375em;
+    margin-bottom: .875em;
+    font-size: .85em;
+}
+
+.details .tags span {
+    padding: .35rem .65rem;
+    color: #fff;
+    border: 1.5px solid rgba(255 255 255 / 0.4);
+    border-radius: 4px;
+    border-radius: 50px;
+}
+
+.details .desc {
+    color: #fff;
+    opacity: .8;
+    line-height: 1.5;
+    margin-bottom: 1em;
+}
+
+.details .cast h3 {
+    margin-bottom: .5em;
+}
+
+.details .cast ul {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    width: 100%;
+}
+
+.details .cast ul li {
+    list-style: none;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid #fff;
+}
+
+.details .cast ul li img {
+    width: 100%;
+    height: 100%;
+}
+.container3 {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.h1 {
+    color:#DBF227;
+    padding-left: 80px;
+    font-size: 40px;
+}
+
+h3 {
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    line-height: 1.5;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+body {
+    background-color: #add8e6; /* Example: a vibrant orange color */
+}
+
+/* Gradient background */
+body {
+    background: linear-gradient(to right,#add8e6, #e6e6fa); /* Example: gradient from orange to green */
+}
+
+/* Navbar button styling */
+.logout-btn {
+  background-color: transparent;
+  border: 2px solid red;
+  color: red;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: red;
+  color: white;
+}
+
+.footer {
+  background-color: rgb(0, 0, 0);
+  color: #fff;
+  padding: 50px 0;
+}
+
+.footer h3 {
+  color: #fff;
+}
+
+.footer p {
+  margin-bottom: 20px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 10px;
+}
+
+.footer ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer ul li a:hover {
+  color: #ccc;
+}
+
+.container3 img{
+	margin-bottom: 10px;
+	max-width: 10%;
+    height: 10%;
+    border-radius: 50%;
+}
+
+.btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+
+
+	</style>
+  </head>
+  <body>
+    <nav  class="navbar navbar-expand-lg" style="background-color: #000000;position: sticky; top:0px;z-index: 2;">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="register">
+  <button class="logout-btn">Logout</button>
+</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="available_books">Available Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="my_books">My Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="loginn">Admin</a>
+        </li>
+        <h1 class="h1">ONLINE BOOK STORE</h1>
+      </ul>
+      
+      <div>
+      <a class="nav-link text-white" href="loginnn">New Book Register</a>
+      </div>
+      
+    </div>
+  </div>
+</nav>
+<div class="wrapper">
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>J. K. Rowling</h5>
+			</div>
+		</div>
+	</div>
+	
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/11445445-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">The Gruffalo</h1>
+			<h2>Published:2010</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4/5</span>
+			</div>
+			
+			<p class="desc">
+				 The Gruffalo is a British children's picture book by writer and playwright Julia Donaldson,that tells the story of a mouse.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/12993218-M.jpg" alt="Antonio Herrera" title="Antonio Herrera"></li>
+					
+				</ul>
+				<h5>Julia Donaldson</h5>
+			</div>
+		</div>
+	</div>
+	
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/8231759-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Cyclops</h1>
+			<h2>Published:December 15, 1986</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>3.82/5</span>
+			</div>
+			
+			<p class="desc">
+				Cyclops is an action-adventure novel by Clive Cussler.This is the 8th book featuring the author’s primary protagonist, Dirk Pitt.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/6270039-M.jpg
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>Clive Cussler
+1931 - 2020</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/8443662-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Stephen King's Danse Macabre</h1>
+			<h2>Publish Date:1981</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>3.70/5</span>
+			</div>
+			
+			<p class="desc">
+				 Stephen King's stunning success as a novelist just may be unrivaled in publishing history.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/7127409-M.jpg
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>Stephen King</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/11291394-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">A Game of Thrones</h1>
+			<h2>Publish Date:May 28, 2002</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.25/5</span>
+			</div>
+			
+			<p class="desc">
+				 Here is the first volume in George R. R. Martin’s magnificent cycle of novels that includes A Clash of Kings and A Storm of Swords.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/6387401-M.jpg
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+			<h5>George R. R. Martin</h5>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/8311468-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Charlotte’s Web</h1>
+			<h2>Publish Date:2002</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.04/5</span>
+			</div>
+			
+			<p class="desc">
+				 Wilbur the pig is desolate when he discovers that he is destined to be the farmer's Christmas dinner until his spider friend, Charlotte, decides to help him.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/6390049-M.jpg
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+			<h5>E. B. White
+11 July 1899 - 1 October 19</h5>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/12009823-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Control Your Mind and Master Your Feelings</h1>
+			<h2>Publish Date:2018</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>3.81/5</span>
+			</div>
+			
+			<p class="desc">
+				We oftentimes look towards the outside world to find the roots of our problems.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://openlibrary.org/images/icons/avatar_author-lg.png
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+			<h5>Eric Robertson - undifferentiated</h5>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/12824425-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">The Psychology of Money</h1>
+			<h2>Published:Sep 08, 2020</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.08/5</span>
+			</div>
+			
+			<p class="desc">
+				 Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://openlibrary.org/images/icons/avatar_author-lg.png
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>Morgan Housel</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/11305050-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Frog and Toad Together</h1>
+			<h2>Published:1999</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				Five further adventures of two best friends as they share cookies, plant a garden, and test their bravery.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/7277965-M.jpg
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+			<h5>Arnold Lobel
+22 May 1933 - 4 December 1987</h5>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/10872657-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Hujan</h1>
+			<h2>Published:Apr 16, 2018</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.22/5</span>
+			</div>
+			
+			<p class="desc">
+				 
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/14534633-M.jpg
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>Tere Liye</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/11983442-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Read People Like a Book</h1>
+			<h2>Published:Dec 19, 2020</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.07/5</span>
+			</div>
+			
+			<p class="desc">
+				 Speed read people, decipher body language, detect lies, and understand human nature.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://openlibrary.org/images/icons/avatar_author-lg.png
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>Patrick King</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/12861554-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Asesinato para principiantes</h1>
+			<h2>Published:2020</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.31/5</span>
+			</div>
+			
+			<p class="desc">
+				 
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/14433789-M.jpg" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>Holly Jackson</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/14443677-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">Wings of Fire</h1>
+			<h2>Published:2015</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.31/5</span>
+			</div>
+			
+			<p class="desc">
+				 
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/b/id/14443677-M.jpg" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>A. P. J. Abdul Kalam</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://covers.openlibrary.org/b/id/10401691-L.jpg"></div>
+		<div class="details">
+			<h1 class="headingg">The Wicked King</h1>
+			<h2>Published:Aug 28, 2019</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://covers.openlibrary.org/a/id/7284384-M.jpg" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+				<h5>Holly Black</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://www.headline.co.uk/wp-content/uploads/2019/01/hbg-title-9780755334377-14.jpg?fit=1525%2C2341"></div>
+		<div class="details">
+			<h1>The Sherlock Holmes</h1>
+			<h2>Published:18th December 2006</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4/5</span>
+			</div>
+			<p class="desc">
+				Sir Arthur Conan Doyle's Sherlock Holmes books feature the iconic detective and his trusty sidekick solving intricate mysteries in Victorian London.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://imgv2-1-f.scribdassets.com/img/word_document/355527263/original/9aba1beea9/1585338317?v=1"></li>
+				</ul>
+				<h5>Arthur Conan Doyle</h5>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://pre00.deviantart.net/a59b/th/pre/i/2012/220/a/4/death_note_book_cover_by_metaknightmare1234-d5adawg.png"></div>
+		<div class="details">
+			<h1>Death Note</h1>
+			<h2>Published:Aug 8, 2012</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star-half-alt"></i>
+				<span>4.7/5</span>
+			</div>
+			<p class="desc">
+				Death Note: A high school student gains the ability to kill anyone with a supernatural notebook, sparking a deadly game of wits with a mysterious detective.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://www.babelio.com/users/AVT_Tsugumi-Ohba_7065.jpg"></li>
+				</ul>
+				<h5>Tsugumi Ohba</h5>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>About Us</h3>
+        <p>Welcome to our bookstore! We offer a wide selection of books for all ages and interests.</p>
+      </div>
+      <div class="col-md-4">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="home">Home</a></li>
+          <li><a href="available_books">Books</a></li>
+          <li><a href="AboutUs">About Us</a></li>
+          <li><a href="https://www.linkedin.com/in/kumarsatyendra15/">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h3>Contact Us</h3>
+        <p>Email:stymvrma2003@gmail.com</p>
+        <p>Phone: +91 6306665984</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+  </body>
+</html>
